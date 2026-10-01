@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Y3BEK — CS 1.6 Nick Generator</title>
+  <style>
+    :root { color-scheme: dark; --gold:#d8c96c; --olive:#55582e; --deep:#0c0e08; --panel:#191b0f; --text:#e6dfb6; --muted:#929466; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; background:radial-gradient(ellipse at 50% -10%,#4d4b19 0%,transparent 42%),linear-gradient(135deg,rgba(255,255,255,.035) 25%,transparent 25%) 0 0/18px 18px,var(--deep); color:var(--text); font-family:Arial,Helvetica,sans-serif; }
+    .shell { width:min(980px,calc(100vw - 32px)); margin:0 auto; padding:38px 0 55px; }
+    header { display:flex; align-items:end; justify-content:space-between; border-bottom:2px solid var(--olive); padding-bottom:13px; margin-bottom:17px; }
+    h1 { margin:0; color:#f2e482; font:700 clamp(32px,7vw,54px)/.85 "Arial Black",Arial,sans-serif; letter-spacing:.1em; text-shadow:3px 3px #000; }
+    .server { margin:0; color:var(--muted); font:11px monospace; letter-spacing:.08em; }
+    .grid { display:grid; grid-template-columns:1.15fr .85fr; gap:14px; }
+    .block { border:1px solid #5e6037; background:linear-gradient(145deg,rgba(33,36,19,.96),rgba(13,15,8,.96)); box-shadow:inset 0 0 0 1px #111306,0 12px 35px rgba(0,0,0,.3); }
+    .block-title { margin:0; padding:10px 13px; border-bottom:1px solid #53552e; background:#292b17; color:#cac36e; font:bold 12px monospace; letter-spacing:.08em; }
+    .main { grid-row:span 2; display:flex; flex-direction:column; min-height:362px; }
+    .nick { flex:1; min-height:178px; display:grid; place-items:center; padding:25px; color:#f5e76f; text-align:center; font:bold clamp(25px,4vw,43px)/1.16 "Courier New",monospace; overflow-wrap:anywhere; text-shadow:2px 2px #000,0 0 12px rgba(245,231,111,.22); }
+    .controls { display:flex; justify-content:center; gap:8px; padding:13px; border-top:1px solid #50532c; }
+    button,input { border-radius:0; font:bold 13px Arial,sans-serif; }
+    button { padding:11px 13px; cursor:pointer; border:1px solid #777a43; color:#f4efbe; background:linear-gradient(#50532d,#292b17); text-shadow:1px 1px #000; }
+    button:hover,button:focus-visible { outline:1px solid #f2e482; background:linear-gradient(#73773d,#3c401f); }
+    #new { min-width:185px; color:#fff5a3; }
+    .form { padding:13px; display:grid; gap:9px; }
+    input { width:100%; min-width:0; padding:11px; color:#f1ebbb; border:1px solid #5b6033; background:#0c0e08; outline:0; }
+    input:focus { border-color:#e8db79; }
+    .result { min-height:42px; padding:11px 13px; margin:0 13px 13px; border:1px dashed #5a5d34; background:#0b0d07; color:#e7dd8b; font:15px/1.35 "Courier New",monospace; overflow-wrap:anywhere; }
+    .footer { margin:14px 0 0; color:#73774a; text-align:center; font:11px monospace; }
+    @media (max-width:700px) { .shell{width:min(100% - 24px,980px);padding-top:24px}.grid{grid-template-columns:1fr}.main{grid-row:auto;min-height:300px}header{align-items:start;flex-direction:column;gap:10px}.server{line-height:1.4}.nick{min-height:150px} }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header><h1>Y3BEK</h1></header>
+    <section class="grid">
+      <article class="block main">
+        <h2 class="block-title">CJIy4aūHbIū_HUK</h2>
+        <div class="nick" id="nick" aria-live="polite"></div>
+        <div class="controls">
+          <button id="previous" aria-label="/7peDbIDyLLIuū">←</button>
+          <button id="new">/7EPErEHEPuPOBaTb</button>
+          <button id="next" aria-label="CJIeDyIOLLIuū">→</button>
+        </div>
+      </article>
+      <article class="block">
+        <h2 class="block-title">CgeJIaTb_HUK_U3_CBoero_TekCTa</h2>
+        <div class="form">
+          <input id="source" maxlength="80" placeholder="Ha6epu_TekCT..." aria-label="CBoū TekCT">
+          <button id="style">3aLLu%poBaTb</button>
+        </div>
+      </article>
+      <article class="block">
+        <h2 class="block-title">PaCLLu%poBaTb_HUK</h2>
+        <div class="form">
+          <input id="encoded" maxlength="120" placeholder="BCTaBb_HUK_U3_uRPbl..." aria-label="HUK_gJI9I_PaCkPblT_u">
+          <button id="decode">PaCkPblTb</button>
+        </div>
+        <div class="result" id="decoded">_</div>
+      </article>
+    </section>
+  </main>
+  <script>
+    const names = [
+      '6a6yLLIkuH_TanoK_Ha_AuMe','MAMa_Cka3aJIa_He_PaLLIuTb','neJIbMeHb_Ha_PecnayHe','DeD_3a_npUJiaBkoM',
+      'koTJIeTa_B_6poHe}|{uJIeTe','CocED_C_DPeJIbIO_Ha_MuDe','yTeHok_C_DurJIoM','3a6bIJI_3aKpblTb_XoJIoDuJIbHuK',
+      'DBe_nyJlu_u_koMnoT','/7oTep9IJIc9I_B_TpёX_CoCHax','4aū_C_ne4eHbKoū_u_Ho}|{','BHyK_U3_n9IToro_nogbe3Da',
+      'na/7a_kaPJI0_B_BeHTuJI9Iu,UU','koT_B_CMeTaHe_Ha_DaCTe','XJle6yLLIek_B_TekCTypax','BoDuTeJIb_MapLLIPyTku_PaLLIuT',
+      'ka6a4ok_C_rpaHaToū','Calo_Ha_BTopoM_3Ta}|{e','6y6Jluk_C_Ho}|{ukoM','6a6yLLIka_B_DblMoBoū',
+      'XoJIoDuJIbHuK','/7eJIbMeHb','ka6a4ok','6y6Jluk','TanoK','koMnoT','yTeHok','CMeTaHa','LLIaBepMa','6a6yLLIka','MapLLIPyTka','CocucKa',
+      'XyLL_keJlu6Cu3','ToLLkeHT_Ha_MuDe','OLL_C_kaJIaLLIoM','4aū_C_caMcoū','nJI0B_Ha_PecnayHe','MoxoPa_B_DblMoBoū'
+    ];
+    const encodeMap = {'а':'a','б':'6','в':'B','г':'r','д':'D','е':'e','ё':'ё','ж':'}|{','з':'3','и':'u','й':'u','к':'k','л':'JI','м':'M','н':'H','о':'o','п':'/7','р':'P','с':'C','т':'T','у':'y','ф':'%','х':'X','ц':'u,','ч':'4','ш':'LLI','щ':'LLI,','ы':'bl','ь':'b','ъ':'b','э':'3','ю':'IO','я':'9I'};
+    const decodeMap = {'}|{':'ж','LLI,':'щ','/7':'п','JI':'л','u,':'ц','IO':'ю','9I':'я','bl':'ы','LLI':'ш','a':'а','A':'а','6':'б','B':'в','r':'г','D':'д','e':'е','E':'е','ё':'ё','3':'з','u':'и','U':'и','k':'к','K':'к','M':'м','m':'м','H':'н','h':'н','o':'о','O':'о','P':'р','p':'р','C':'с','c':'с','T':'т','t':'т','y':'у','Y':'у','%':'ф','X':'х','x':'х','4':'ч','b':'ь','I':'и'};
+    const multiTokens = Object.keys(decodeMap).filter(token => token.length > 1).sort((a,b) => b.length - a.length);
+    const shown = []; let position = -1;
+    const output = document.querySelector('#nick');
+    const source = document.querySelector('#source');
+    const encoded = document.querySelector('#encoded');
+    const decoded = document.querySelector('#decoded');
+    function render() { output.textContent = shown[position]; }
+    function add(nick) { shown.splice(position + 1); shown.push(nick); position = shown.length - 1; render(); }
+    function generate() { let nick; do { nick = names[Math.floor(Math.random() * names.length)]; } while (nick === shown[position] && names.length > 1); add(nick); }
+    function encode(text) { return text.trim().toLowerCase().split(/\s+/).map(word => [...word].map((letter,index) => { const piece = encodeMap[letter] ?? letter; return index === 0 ? piece.toUpperCase() : piece; }).join('')).join('_'); }
+    function decode(text) {
+      let value = text.trim().replaceAll('_',' '), result = '', index = 0;
+      while (index < value.length) {
+        const token = multiTokens.find(part => value.startsWith(part,index));
+        if (token) { result += decodeMap[token]; index += token.length; }
+        else { result += decodeMap[value[index]] ?? value[index]; index++; }
+      }
+      return result;
+    }
+    function createFromText() { const nick = encode(source.value); if (nick) add(nick); }
+    document.querySelector('#new').addEventListener('click',generate);
+    document.querySelector('#previous').addEventListener('click',() => { if(position>0){position--;render();} });
+    document.querySelector('#next').addEventListener('click',() => { if(position<shown.length-1){position++;render();} });
+    document.querySelector('#style').addEventListener('click',createFromText);
+    document.querySelector('#decode').addEventListener('click',() => { decoded.textContent = decode(encoded.value) || '_'; });
+    source.addEventListener('keydown',event => { if(event.key==='Enter') createFromText(); });
+    encoded.addEventListener('keydown',event => { if(event.key==='Enter') document.querySelector('#decode').click(); });
+    document.addEventListener('keydown',event => { if(event.target===source || event.target===encoded) return; if(event.key==='ArrowLeft') document.querySelector('#previous').click(); if(event.key==='ArrowRight') document.querySelector('#next').click(); if(event.key.toLowerCase()==='r') generate(); });
+    generate();
+  </script>
+</body>
+</html>
+
+

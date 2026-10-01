@@ -1,1 +1,1 @@
-# brbrbrbrb
+# cs1.6-nickname-generator
